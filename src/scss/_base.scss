@@ -1,0 +1,96 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-family: "Noto Sans TC", sans-serif;
+  box-sizing: border-box;
+}
+
+.padding-x {
+  padding-left: 124px;
+  padding-right: 124px;
+
+  @media only screen and (max-width: 1090px) {
+    padding-left: 80px;
+    padding-right: 80px;
+  }
+
+  @media only screen and (max-width: 800px) {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media only screen and (max-width: 685px) {
+    padding-left: 8%;
+    padding-right: 8%;
+  }
+}
+
+.highlight {
+  font-weight: 500;
+  color: $color-primary;
+}
+
+.text-l {
+  font-size: 24px;
+  line-height: 24px;
+  letter-spacing: 4.32px;
+
+  @media only screen and (max-width: 800px) {
+    font-size: 20px;
+  }
+
+  @media only screen and (max-width: 685px) {
+    font-size: 18px;
+  }
+}
+
+.text-m {
+  font-size: 18px;
+  line-height: 24px;
+
+  @media only screen and (max-width: 685px) {
+    font-size: 16px;
+  }
+}
+
+.text-btn {
+  font-size: 18px;
+  line-height: 20px;
+  letter-spacing: 0.1px;
+
+  @media only screen and (max-width: 990px) {
+    font-size: 16px;
+  }
+}
+
+.text-s {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.btn {
+  color: $color-white;
+  padding: 10px 24px;
+  margin-left: auto;
+  background-color: $color-primary;
+  border-radius: 99px;
+  transition: all 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  @media only screen and (max-width: 685px) {
+    margin-left: 0;
+    margin-top: auto;
+    color: $color-primary;
+    background-color: $color-white;
+  }
+}

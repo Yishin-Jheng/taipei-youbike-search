@@ -1,0 +1,90 @@
+.table {
+  margin-bottom: 32px;
+
+  &__container {
+    border-radius: 28px;
+    border: 0.5px solid $color-grey-3;
+    border-color: $color-primary $color-grey-3 $color-grey-3 $color-grey-3;
+
+    &::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      border-radius: 99px;
+      background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 99px;
+      background: $color-grey-2;
+
+      &:hover {
+        background: $color-grey-3;
+      }
+    }
+
+    @media only screen and (max-width: 685px) {
+      overflow-x: scroll;
+      border-radius: 8px;
+    }
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr 1fr 1fr;
+
+    @media only screen and (max-width: 685px) {
+      width: 650px;
+    }
+
+    &--thead {
+      margin: -0.5px;
+      border-radius: 28px 28px 0 0;
+      background-color: $color-primary;
+
+      @media only screen and (max-width: 685px) {
+        border-radius: 8px 8px 0 0;
+      }
+    }
+
+    &:last-child {
+      border-radius: 0 0 28px 28px;
+
+      @media only screen and (max-width: 685px) {
+        border-radius: 0 0 8px 8px;
+      }
+    }
+
+    &:not(.table__row--thead) {
+      &:nth-child(odd) {
+        background-color: $color-grey-1;
+      }
+    }
+  }
+
+  &__cell {
+    height: 66px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &--th {
+      font-weight: 500;
+      color: $color-white;
+    }
+
+    &--sort {
+      cursor: pointer;
+    }
+
+    &--number {
+      font-weight: 700;
+      color: $color-primary;
+    }
+
+    &--icon {
+      grid-column: 1 / -1;
+    }
+  }
+}

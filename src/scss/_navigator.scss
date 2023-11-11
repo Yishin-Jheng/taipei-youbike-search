@@ -1,0 +1,133 @@
+.nav {
+  display: flex;
+  gap: 60px;
+  align-items: center;
+  justify-content: space-between;
+
+  height: 104px;
+  background-color: $color-white;
+  border-bottom: 2px solid $color-grey-2;
+
+  @media only screen and (max-width: 990px) {
+    gap: 20px;
+  }
+
+  @media only screen and (max-width: 685px) {
+    width: 100%;
+    height: 72px;
+
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+  }
+
+  &__icon {
+    width: 95px;
+
+    @media only screen and (max-width: 800px) {
+      width: 65px;
+    }
+  }
+
+  &__img {
+    width: 95px;
+    height: 95px;
+  }
+
+  &__list {
+    flex-grow: 1;
+    display: flex;
+    gap: 40px;
+    align-items: center;
+
+    color: $color-primary-dark;
+    font-weight: 500;
+
+    @media only screen and (max-width: 990px) {
+      gap: 15px;
+    }
+
+    @media only screen and (max-width: 685px) {
+      gap: 32px;
+      flex-direction: column;
+      align-items: flex-start;
+
+      z-index: 999;
+      position: fixed;
+      top: 72px;
+      left: 0;
+
+      width: 100vw;
+      height: calc(100vh - 72px);
+      padding: 8.53%;
+      color: $color-white;
+      background-color: $color-primary;
+      opacity: 0;
+      transform: translateX(100vw);
+      transition: all 0.5s;
+    }
+
+    &--open {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    &__link {
+      cursor: pointer;
+      transition: all 0.3s;
+
+      &:not(.nav__list__link--active):hover {
+        opacity: 0.8;
+      }
+
+      &--active {
+        color: $color-primary;
+
+        @media only screen and (max-width: 685px) {
+          color: $color-primary-dark;
+        }
+      }
+
+      @media only screen and (max-width: 685px) {
+        letter-spacing: 3.24px;
+      }
+    }
+  }
+
+  &__minimize {
+    display: none;
+
+    @media only screen and (max-width: 685px) {
+      cursor: pointer;
+      display: flex;
+      gap: 3.5px;
+      flex-direction: column;
+    }
+
+    &__icon-1,
+    &__icon-2,
+    &__icon-3 {
+      width: 25px;
+      height: 2.5px;
+      background-color: $color-primary;
+      display: inline-block;
+    }
+
+    &__icon-1,
+    &__icon-3 {
+      transform-origin: center;
+      transition: all 0.3s;
+    }
+
+    &__icon-1--active {
+      transform: rotate(135deg) translate(4.5px, -4.5px);
+    }
+    &__icon-2--active {
+      background-color: transparent;
+    }
+    &__icon-3--active {
+      transform: rotate(-135deg) translate(4.5px, 4.5px);
+    }
+  }
+}
