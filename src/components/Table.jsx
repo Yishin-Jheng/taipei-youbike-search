@@ -13,13 +13,13 @@ function Table() {
   const sortedData = _.orderBy(
     tableData,
     [(site) => parseInt(site[sortKey])],
-    [sortOrder]
+    [sortOrder],
   );
   const currentData = searchTerm.siteName
     ? sortedData.filter(
         (site) =>
           searchTerm.dist.includes(site.sarea) &&
-          site.sna.includes(searchTerm.siteName)
+          site.sna.includes(searchTerm.siteName),
       )
     : sortedData.filter((site) => searchTerm.dist.includes(site.sarea));
 
@@ -46,13 +46,13 @@ function Table() {
           <div className="table__cell table__cell--th">站點名稱</div>
           <div
             className="table__cell table__cell--th table__cell--sort"
-            onClick={() => handleSort("sbi")}
+            onClick={() => handleSort("available_rent_bikes")}
           >
             可借車輛
           </div>
           <div
             className="table__cell table__cell--th table__cell--sort"
-            onClick={() => handleSort("bemp")}
+            onClick={() => handleSort("available_return_bikes")}
           >
             可還空位
           </div>
@@ -66,10 +66,10 @@ function Table() {
                 <div className="table__cell">{site.sarea}</div>
                 <div className="table__cell">{site.sna.split("_")[1]}</div>
                 <div className="table__cell table__cell--number">
-                  {site.sbi}
+                  {site.available_rent_bikes}
                 </div>
                 <div className="table__cell table__cell--number">
-                  {site.bemp}
+                  {site.available_return_bikes}
                 </div>
               </div>
             );

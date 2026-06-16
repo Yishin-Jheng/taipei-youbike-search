@@ -8,14 +8,10 @@ function Search() {
     <section className="search padding-x">
       <div className="search__container">
         <h2 className="search__title text-l">站點資訊</h2>
-
         <Dropdowns />
-
         <Input />
-
         <CheckList />
       </div>
-
       <img
         src={rideBike}
         className="search__image"

@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import fetchJSON from "./FetchData";
+import fetchUbikeJson from "./fetchUbikeJson";
 import Navigator from "./components/Navigator";
 import Search from "./components/Search";
 import Table from "./components/Table";
@@ -19,14 +19,8 @@ function App() {
 
   const fetchData = async function () {
     try {
-      const dataTP = await fetchJSON(
-        "https://tcgbusfs.blob.core.windows.net/dotapp/youbike/v2/youbike_immediate.json"
-      );
-      const dataNTP = await fetchJSON(
-        "https://data.ntpc.gov.tw/api/datasets/010e5b15-3823-4b20-b401-b1cf000550c5/json?size=1000"
-      );
-
-      setTableData([...dataTP, ...dataNTP]);
+      const result = await fetchUbikeJson();
+      setTableData(result);
     } catch (err) {
       console.error(err);
       alert(`⚠️資料加載失敗`);
@@ -38,13 +32,15 @@ function App() {
   }, []);
 
   return (
-    <SearchContext.Provider
-      value={{ tableData, searchTerm, handleSearchTermChange }}
-    >
+    <>
       <Navigator />
-      <Search />
-      <Table />
-    </SearchContext.Provider>
+      <SearchContext.Provider
+        value={{ tableData, searchTerm, handleSearchTermChange }}
+      >
+        <Search />
+        <Table />
+      </SearchContext.Provider>
+    </>
   );
 }
 
