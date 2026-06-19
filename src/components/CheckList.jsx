@@ -36,7 +36,7 @@ function CheckList() {
   useEffect(() => {
     handleSearchTermChange(
       "dist",
-      listItem.filter((item, i) => isCheck.includes(i))
+      listItem.filter((item, i) => isCheck.includes(i)),
     );
   }, [isCheck]);
 

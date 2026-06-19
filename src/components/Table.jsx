@@ -18,10 +18,10 @@ function Table() {
   const currentData = searchTerm.siteName
     ? sortedData.filter(
         (site) =>
-          searchTerm.dist.includes(site.sarea) &&
-          site.sna.includes(searchTerm.siteName),
+          searchTerm.dist.includes(site.dist) &&
+          site.stationName.includes(searchTerm.siteName),
       )
-    : sortedData.filter((site) => searchTerm.dist.includes(site.sarea));
+    : sortedData.filter((site) => searchTerm.dist.includes(site.dist));
 
   const handleSort = (key) => {
     if (sortKey === key) {
@@ -46,13 +46,13 @@ function Table() {
           <div className="table__cell table__cell--th">站點名稱</div>
           <div
             className="table__cell table__cell--th table__cell--sort"
-            onClick={() => handleSort("available_rent_bikes")}
+            onClick={() => handleSort("availableRentBikes")}
           >
             可借車輛
           </div>
           <div
             className="table__cell table__cell--th table__cell--sort"
-            onClick={() => handleSort("available_return_bikes")}
+            onClick={() => handleSort("availableReturnBikes")}
           >
             可還空位
           </div>
@@ -61,15 +61,15 @@ function Table() {
         {currentData.length ? (
           currentData.map((site) => {
             return (
-              <div key={site.sno} className="table__row">
+              <div key={site.id} className="table__row">
                 <div className="table__cell">{searchTerm.city}</div>
-                <div className="table__cell">{site.sarea}</div>
-                <div className="table__cell">{site.sna.split("_")[1]}</div>
+                <div className="table__cell">{site.dist}</div>
+                <div className="table__cell">{site.stationName}</div>
                 <div className="table__cell table__cell--number">
-                  {site.available_rent_bikes}
+                  {site.availableRentBikes}
                 </div>
                 <div className="table__cell table__cell--number">
-                  {site.available_return_bikes}
+                  {site.availableReturnBikes}
                 </div>
               </div>
             );
