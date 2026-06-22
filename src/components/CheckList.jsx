@@ -4,41 +4,43 @@ import distData from "../DistData";
 
 function CheckList() {
   const { searchTerm, handleSearchTermChange } = useContext(SearchContext);
-  const [isCheck, setIsCheck] = useState([]);
+  const [isCheckedDist, setIsCheckedDist] = useState([]);
   const [isCheckAll, setIsCheckAll] = useState(true);
   const listItem = searchTerm.city
-    ? distData.filter((obj) => obj.city === searchTerm.city)[0].dist
+    ? distData.filter((obj) => obj.city === searchTerm.city).at(0).dist
     : [];
 
   const handleClick = function (e) {
     const { id, checked } = e.target;
+
     if (checked) {
-      setIsCheck([...isCheck, parseInt(id)]);
-    } else {
-      setIsCheck(isCheck.filter((i) => i !== parseInt(id)));
+      setIsCheckedDist((pre) => [...pre, id]);
+      return;
     }
+    setIsCheckedDist((pre) => pre.filter((item) => item !== id));
   };
 
   const handleClickAll = function () {
-    setIsCheckAll(!isCheckAll);
+    setIsCheckAll((pre) => !pre);
+
     if (isCheckAll) {
-      setIsCheck([]);
-    } else {
-      setIsCheck(listItem.map((item, i) => i));
+      setIsCheckedDist([]);
+      return;
     }
+    setIsCheckedDist(listItem);
   };
 
   useEffect(() => {
-    setIsCheck(listItem.map((item, i) => i));
     setIsCheckAll(true);
+    setIsCheckedDist(listItem);
   }, [searchTerm.city]);
 
   useEffect(() => {
     handleSearchTermChange(
       "dist",
-      listItem.filter((item, i) => isCheck.includes(i)),
+      listItem.filter((item) => isCheckedDist.includes(item)),
     );
-  }, [isCheck]);
+  }, [isCheckedDist]);
 
   return (
     <div className="search__checkbox--group">
@@ -53,22 +55,21 @@ function CheckList() {
           onChange={handleClickAll}
         />
         <span className="checkmark"></span>
-
         <p className="text-m">全部勾選</p>
       </label>
 
-      {listItem.map((item, i) => {
+      {listItem.map((dist) => {
         return (
-          <label key={i} className="search__checkbox" htmlFor={i}>
+          <label key={dist} className="search__checkbox" htmlFor={dist}>
             <input
-              id={i}
+              id={dist}
               type="checkbox"
-              checked={isCheck.includes(i)}
+              checked={isCheckedDist.includes(dist)}
               onChange={handleClick}
             />
             <span className="checkmark"></span>
 
-            <p className="text-m">{item}</p>
+            <p className="text-m">{dist}</p>
           </label>
         );
       })}
