@@ -1,5 +1,4 @@
-@import "./scss/variables";
-@import "./scss/base";
-@import "./scss/navigator";
-@import "./scss/search";
-@import "./scss/table";
+@use "./scss/base";
+@use "./scss/navigator";
+@use "./scss/search";
+@use "./scss/table";
