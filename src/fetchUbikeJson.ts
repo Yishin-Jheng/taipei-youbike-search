@@ -42,7 +42,7 @@ interface NewTaipeiCityUbikeData {
   eyb_quantity: string;
 }
 
-interface UBikeData {
+export interface UBikeData {
   id: string;
   dist: string;
   stationName: string;

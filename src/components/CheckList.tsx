@@ -4,43 +4,40 @@ import distData from "../DistData";
 
 function CheckList() {
   const { searchTerm, handleSearchTermChange } = useContext(SearchContext);
-  const [isCheckedDist, setIsCheckedDist] = useState([]);
+  const [checkedDistList, setCheckedDistList] = useState<string[]>([]);
   const [isCheckAll, setIsCheckAll] = useState(true);
   const listItem = searchTerm.city
-    ? distData.filter((obj) => obj.city === searchTerm.city).at(0).dist
+    ? (distData.find((obj) => obj.city === searchTerm.city)?.dist ?? [])
     : [];
 
-  const handleClick = (e) => {
+  const handleClick = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, checked } = e.target;
 
     if (checked) {
-      setIsCheckedDist((pre) => [...pre, id]);
+      setCheckedDistList((pre) => [...pre, id]);
       return;
     }
-    setIsCheckedDist((pre) => pre.filter((item) => item !== id));
+    setCheckedDistList((pre) => pre.filter((item) => item !== id));
   };
 
   const handleClickAll = () => {
-    setIsCheckAll((pre) => !pre);
-
     if (isCheckAll) {
-      setIsCheckedDist([]);
+      setIsCheckAll(false);
+      setCheckedDistList([]);
       return;
     }
-    setIsCheckedDist(listItem);
+    setIsCheckAll(true);
+    setCheckedDistList(listItem);
   };
 
   useEffect(() => {
     setIsCheckAll(true);
-    setIsCheckedDist(listItem);
+    setCheckedDistList(listItem);
   }, [searchTerm.city]);
 
   useEffect(() => {
-    handleSearchTermChange(
-      "dist",
-      listItem.filter((item) => isCheckedDist.includes(item)),
-    );
-  }, [isCheckedDist]);
+    handleSearchTermChange("dist", checkedDistList);
+  }, [checkedDistList]);
 
   return (
     <div className="search__checkbox--group">
@@ -64,7 +61,7 @@ function CheckList() {
             <input
               id={dist}
               type="checkbox"
-              checked={isCheckedDist.includes(dist)}
+              checked={checkedDistList.includes(dist)}
               onChange={handleClick}
             />
             <span className="checkmark"></span>
