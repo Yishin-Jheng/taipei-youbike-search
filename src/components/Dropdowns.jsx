@@ -8,16 +8,17 @@ const cityList = ["台北市", "新北市"];
 
 function Dropdowns() {
   const { searchTerm, handleSearchTermChange } = useContext(SearchContext);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenMenu, setIsOpenMenu] = useState(false);
   const selectRef = useRef(null);
-  useHandleClickOutside(selectRef, setIsOpen);
+  useHandleClickOutside(selectRef, setIsOpenMenu);
 
   const handleOpen = () => {
-    setIsOpen(!isOpen);
+    setIsOpenMenu((pre) => !pre);
   };
 
   const handleSelect = (city) => {
     handleSearchTermChange("city", city);
+    setIsOpenMenu(false);
   };
 
   return (
@@ -41,23 +42,21 @@ function Dropdowns() {
         </IconContext.Provider>
       </div>
 
-      {isOpen ? (
+      {isOpenMenu ? (
         <ul className="search__select__options" onClick={handleOpen}>
-          {cityList.map((city, i) => {
-            return (
-              <li
-                key={city}
-                onClick={() => handleSelect(city)}
-                className={`${
-                  city === searchTerm.city
-                    ? "search__select__options--active"
-                    : ""
-                }`}
-              >
-                {city}
-              </li>
-            );
-          })}
+          {cityList.map((city, i) => (
+            <li
+              key={city}
+              onClick={() => handleSelect(city)}
+              className={`${
+                city === searchTerm.city
+                  ? "search__select__options--active"
+                  : ""
+              }`}
+            >
+              {city}
+            </li>
+          ))}
         </ul>
       ) : null}
     </div>

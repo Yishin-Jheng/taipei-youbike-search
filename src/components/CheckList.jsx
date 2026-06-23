@@ -10,7 +10,7 @@ function CheckList() {
     ? distData.filter((obj) => obj.city === searchTerm.city).at(0).dist
     : [];
 
-  const handleClick = function (e) {
+  const handleClick = (e) => {
     const { id, checked } = e.target;
 
     if (checked) {
@@ -20,7 +20,7 @@ function CheckList() {
     setIsCheckedDist((pre) => pre.filter((item) => item !== id));
   };
 
-  const handleClickAll = function () {
+  const handleClickAll = () => {
     setIsCheckAll((pre) => !pre);
 
     if (isCheckAll) {

@@ -12,11 +12,7 @@ const navLinkList = [
 
 function Navigator() {
   const [isNavOpen, setIsNavOpen] = useState(false);
-  const [isActive, setIsActive] = useState(3);
-
-  const handleClick = function (id) {
-    setIsActive(id);
-  };
+  const [activePageId, setActivePageId] = useState(3);
 
   return (
     <nav className="nav padding-x">
@@ -25,27 +21,21 @@ function Navigator() {
         {navLinkList.map((link) => {
           return (
             <div
-              key={link.id}
+              key={`${link.name}-${link.id}`}
               className={`nav__list__link ${
-                isActive === link.id ? "nav__list__link--active" : ""
+                activePageId === link.id ? "nav__list__link--active" : ""
               }`}
-              onClick={() => {
-                handleClick(link.id);
-              }}
+              onClick={() => setActivePageId(link.id)}
             >
               <span className="text-m">{link.name}</span>
             </div>
           );
         })}
-
         <div className="btn text-btn">登入</div>
       </div>
-
       <div
         className="nav__minimize"
-        onClick={() => {
-          setIsNavOpen(!isNavOpen);
-        }}
+        onClick={() => setIsNavOpen((pre) => !pre)}
       >
         {navBtnArr.map((num) => {
           return (

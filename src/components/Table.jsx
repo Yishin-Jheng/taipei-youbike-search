@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { useContext, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { SearchContext } from "../App";
 import { IconContext } from "react-icons";
 import { MdDirectionsBike } from "react-icons/md";
@@ -7,33 +7,35 @@ import { WiWindy } from "react-icons/wi";
 
 function Table() {
   const { tableData, searchTerm } = useContext(SearchContext);
-  const [sortKey, setSortKey] = useState(null);
-  const [sortOrder, setSortOrder] = useState(null);
+  const [sortKey, setSortKey] = useState("");
+  const [sortOrder, setSortOrder] = useState("");
 
   const sortedData = _.orderBy(
     tableData,
     [(site) => parseInt(site[sortKey])],
     [sortOrder],
   );
-  const currentData = searchTerm.siteName
-    ? sortedData.filter(
+  const currentTableData = useMemo(
+    () =>
+      sortedData.filter(
         (site) =>
           searchTerm.dist.includes(site.dist) &&
           site.stationName.includes(searchTerm.siteName),
-      )
-    : sortedData.filter((site) => searchTerm.dist.includes(site.dist));
+      ),
+    [sortedData, searchTerm.dist, searchTerm.siteName],
+  );
 
   const handleSort = (key) => {
-    if (sortKey === key) {
-      if (sortOrder === "asc") {
-        setSortOrder("desc");
-      } else {
-        setSortKey(null);
-        setSortOrder(null);
-      }
-    } else {
+    if (sortKey !== key) {
       setSortKey(key);
       setSortOrder("asc");
+    }
+    if (sortKey === key && sortOrder === "asc") {
+      setSortOrder("desc");
+    }
+    if (sortKey === key && sortOrder === "desc") {
+      setSortKey("");
+      setSortOrder("");
     }
   };
 
@@ -57,9 +59,8 @@ function Table() {
             可還空位
           </div>
         </div>
-
-        {currentData.length ? (
-          currentData.map((site) => {
+        {!!currentTableData.length &&
+          currentTableData.map((site) => {
             return (
               <div key={site.id} className="table__row">
                 <div className="table__cell">{searchTerm.city}</div>
@@ -73,8 +74,8 @@ function Table() {
                 </div>
               </div>
             );
-          })
-        ) : (
+          })}
+        {!currentTableData.length && (
           <>
             <div className="table__row">
               <div className="table__cell"></div>

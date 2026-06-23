@@ -19,10 +19,10 @@ function Input() {
   const inputRef = useRef(null);
   useHandleClickOutside(inputRef, setIsOpen);
 
-  const currentTableData = useMemo(() => {
-    const isSearchedDist = (item) => searchTerm.dist.includes(item);
-    return tableData.filter((site) => isSearchedDist(site.dist));
-  }, [tableData, searchTerm.dist]);
+  const currentTableData = useMemo(
+    () => tableData.filter((site) => searchTerm.dist.includes(site.dist)),
+    [tableData, searchTerm.dist],
+  );
   const optionList = currentTableData.filter((site) =>
     site.stationName.includes(input),
   );
@@ -58,7 +58,7 @@ function Input() {
         <IconContext.Provider
           value={{
             size: "15px",
-            color: `${input ? "#b5cc22" : "#aeaeae"}`,
+            color: `${input ? "#323232" : "#aeaeae"}`,
           }}
         >
           <AiOutlineClose />
