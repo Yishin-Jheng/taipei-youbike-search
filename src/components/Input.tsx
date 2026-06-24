@@ -1,11 +1,4 @@
-import {
-  useContext,
-  useMemo,
-  useState,
-  useRef,
-  useEffect,
-  Fragment,
-} from "react";
+import { useContext, useMemo, useState, useRef, Fragment } from "react";
 import { SearchContext } from "../App";
 import { IconContext } from "react-icons";
 import { AiOutlineClose } from "react-icons/ai";
@@ -16,15 +9,16 @@ function Input() {
     useContext(SearchContext);
   const [input, setInput] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLDivElement>(null);
   useHandleClickOutside(inputRef, setIsOpen);
 
   const currentTableData = useMemo(
     () => tableData.filter((site) => searchTerm.dist.includes(site.dist)),
     [tableData, searchTerm.dist],
   );
-  const optionList = currentTableData.filter((site) =>
-    site.stationName.includes(input),
+  const optionList = useMemo(
+    () => currentTableData.filter((site) => site.stationName.includes(input)),
+    [currentTableData, input],
   );
 
   const handleClear = () => {
@@ -33,7 +27,7 @@ function Input() {
     handleSearchTermChange("siteName", "");
   };
 
-  const handleClickOption = (name) => {
+  const handleClickOption = (name: string) => {
     setInput(name);
     setIsOpen(false);
     handleSearchTermChange("siteName", name);
@@ -49,7 +43,7 @@ function Input() {
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={(e) => {
           if (e.key === "Enter" && !e.nativeEvent.isComposing) {
-            handleSearchTermChange("siteName", e.target.value);
+            handleSearchTermChange("siteName", input);
           }
         }}
         onFocus={() => setIsOpen(true)}
@@ -67,7 +61,7 @@ function Input() {
 
       {isOpen && !!optionList.length && (
         <ul className="search__select__options">
-          {optionList.map((site, i) => {
+          {optionList.map((site) => {
             const name = site.stationName;
             const parts = name.split(input);
             const autoCompName = parts.map((part, i) =>

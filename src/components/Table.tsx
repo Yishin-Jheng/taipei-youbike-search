@@ -1,31 +1,29 @@
 import _ from "lodash";
-import { useContext, useMemo, useState } from "react";
-import { SearchContext } from "../App";
+import { useContext, useState } from "react";
 import { IconContext } from "react-icons";
 import { MdDirectionsBike } from "react-icons/md";
 import { WiWindy } from "react-icons/wi";
+import { SearchContext } from "../App";
+import { NumberKeysOf } from "../types";
+import { UBikeData } from "../fetchUbikeJson";
 
 function Table() {
   const { tableData, searchTerm } = useContext(SearchContext);
-  const [sortKey, setSortKey] = useState("");
-  const [sortOrder, setSortOrder] = useState("");
+  const [sortKey, setSortKey] = useState<NumberKeysOf<UBikeData> | "">("");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc" | "">("");
 
   const sortedData = _.orderBy(
     tableData,
-    [(site) => parseInt(site[sortKey])],
-    [sortOrder],
+    sortKey ? [(site: UBikeData) => site[sortKey]] : [],
+    sortOrder ? [sortOrder] : [],
   );
-  const currentTableData = useMemo(
-    () =>
-      sortedData.filter(
-        (site) =>
-          searchTerm.dist.includes(site.dist) &&
-          site.stationName.includes(searchTerm.siteName),
-      ),
-    [sortedData, searchTerm.dist, searchTerm.siteName],
+  const currentTableData = sortedData.filter(
+    (site) =>
+      searchTerm.dist.includes(site.dist) &&
+      site.stationName.includes(searchTerm.siteName),
   );
 
-  const handleSort = (key) => {
+  const handleSort = (key: NumberKeysOf<UBikeData>) => {
     if (sortKey !== key) {
       setSortKey(key);
       setSortOrder("asc");

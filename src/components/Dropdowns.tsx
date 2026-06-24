@@ -1,22 +1,22 @@
-import { useRef, useState, useEffect, useContext } from "react";
+import { useRef, useState, useContext } from "react";
 import { SearchContext } from "../App";
 import { IconContext } from "react-icons";
 import { AiFillCaretDown } from "react-icons/ai";
 import useHandleClickOutside from "../hooks/useHandleClickOutside";
 
-const cityList = ["台北市", "新北市"];
+const cityList = ["台北市", "新北市"] as const;
 
 function Dropdowns() {
   const { searchTerm, handleSearchTermChange } = useContext(SearchContext);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
-  const selectRef = useRef(null);
+  const selectRef = useRef<HTMLDivElement>(null);
   useHandleClickOutside(selectRef, setIsOpenMenu);
 
   const handleOpen = () => {
     setIsOpenMenu((pre) => !pre);
   };
 
-  const handleSelect = (city) => {
+  const handleSelect = (city: (typeof cityList)[number]) => {
     handleSearchTermChange("city", city);
     setIsOpenMenu(false);
   };
@@ -24,7 +24,7 @@ function Dropdowns() {
   return (
     <div
       ref={selectRef}
-      className="search__select__container  text-btn"
+      className="search__select__container text-btn"
       onClick={handleOpen}
     >
       <div className="search__select">
@@ -43,11 +43,14 @@ function Dropdowns() {
       </div>
 
       {isOpenMenu ? (
-        <ul className="search__select__options" onClick={handleOpen}>
-          {cityList.map((city, i) => (
+        <ul className="search__select__options">
+          {cityList.map((city) => (
             <li
               key={city}
-              onClick={() => handleSelect(city)}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleSelect(city);
+              }}
               className={`${
                 city === searchTerm.city
                   ? "search__select__options--active"

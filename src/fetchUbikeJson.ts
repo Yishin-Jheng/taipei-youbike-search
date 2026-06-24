@@ -46,8 +46,8 @@ export interface UBikeData {
   id: string;
   dist: string;
   stationName: string;
-  availableRentBikes: string;
-  availableReturnBikes: string;
+  availableRentBikes: number;
+  availableReturnBikes: number;
 }
 
 const formatTaipeiUbikeData = (rawData: TaipeiCityUbikeData[]): UBikeData[] => {
@@ -55,8 +55,8 @@ const formatTaipeiUbikeData = (rawData: TaipeiCityUbikeData[]): UBikeData[] => {
     id: site.sno,
     dist: site.sarea,
     stationName: site.sna.split("_")[1],
-    availableRentBikes: String(site.available_rent_bikes),
-    availableReturnBikes: String(site.available_return_bikes),
+    availableRentBikes: site.available_rent_bikes,
+    availableReturnBikes: site.available_return_bikes,
   }));
 };
 
@@ -67,8 +67,8 @@ const formatNewTaipeiUbikeData = (
     id: site.sno,
     dist: site.sarea,
     stationName: site.sna.split("_")[1],
-    availableRentBikes: site.sbi_quantity,
-    availableReturnBikes: site.bemp,
+    availableRentBikes: Number(site.sbi_quantity),
+    availableReturnBikes: Number(site.bemp),
   }));
 };
 

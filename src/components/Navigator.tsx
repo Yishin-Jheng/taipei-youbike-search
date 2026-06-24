@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ubike from "../assets/ubike.svg";
 
-const navBtnArr = [1, 2, 3];
+const navBtnArr = [1, 2, 3] as const;
 const navLinkList = [
   { id: 1, name: "使用說明" },
   { id: 2, name: "收費方式" },
@@ -16,7 +16,7 @@ function Navigator() {
 
   return (
     <nav className="nav padding-x">
-      <img className="nav__icon" src={ubike} />
+      <img className="nav__icon" src={ubike} alt="YouBike icon" />
       <div className={`nav__list ${isNavOpen ? "nav__list--open" : ""}`}>
         {navLinkList.map((link) => {
           return (
