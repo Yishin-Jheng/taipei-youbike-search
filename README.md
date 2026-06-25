@@ -1,9 +1,5 @@
 # 台北市＆新北市 YouBike 站點資訊查詢
 
-## Live demo
-
-[🔗](https://taipei-youbike-yishin.netlify.app/)
-
 ## 目次
 
 - [題目要求](#題目要求)
@@ -20,6 +16,8 @@
 - 真實資料只需串接台北市 YouBike API，其餘縣市可用假資料或空白示意
 
 ### 功能敘述
+
+Live demo: [🔗](https://taipei-youbike-yishin.netlify.app/)
 
 - 搜尋欄位 Input & Dropdown
   - 按鈕點擊，顯示/收合縣市清單
